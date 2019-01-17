@@ -3,16 +3,16 @@ from django.db import models
 
 class Menu(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название меню')
-    # 2 таблички: узлы и меню. В узлах - ссылка на меню, в каждом узле - ссылка на родителя
-    # чтобы сформировать дерево нужно использовать рекурсию
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Родитель')
 
+    def __str__(self):
+        return self.title
 
-class Option(models.Model):
-    menu = models.ForeignKey('Menu', models.DO_NOTHING, blank=True, verbose_name='Название меню')
-    title = models.CharField(max_length=100, verbose_name='Пункт меню')
+    def get_elder_ids(self):
+        if self.parent:
+            return self.parent.get_elder_ids() + [self.parent.id]
+        else:
+            return []
 
-
-class InnerOption(models.Model):
-    option = models.ForeignKey('Option', models.DO_NOTHING, blank=True, verbose_name='Пункт меню')
-    title = models.CharField(max_length=100, verbose_name='Вложенный пункт меню')
-    text = models.TextField(verbose_name='Описание')
+    def children(self):
+        return self.menu_set.all()

@@ -3,6 +3,12 @@
 {% load draw_menu %}
 
 <html lang="en">
+  <style>
+       html {padding: 30px}
+       p {
+        margin-left: 3em;
+       }
+  </style>
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
@@ -10,5 +16,6 @@
 <body>
     {% draw_menu 'main_menu' %}
     {% draw_menu 'second_menu' %}
+    {% draw_menu 'third_menu' %}
 </body>
 </html>

@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Draw menu</title>
-
-   <style>
-   html {padding: 30px}
-   p {
-    margin-left: 3em;
-   }
-  </style>
-
-</head>
-<body>
-<details>
-    <summary> {{ selected_menu.title }} </summary>
+{% load draw_menu %}
+<details {% if menu.id in opened_menu_ids %} open {% endif %}>
+    <summary> <a href="{% url 'menu:view_menu' menu.id %}">{{ menu.title }}</a> </summary>
     <ul>
-        {% for option, inner_options in all_inner_options.items %}
-            <details>
-                <summary> {{ option.title }} :</summary>
-                <div class="menu_item">
-                    {% for inner in inner_options %}
-                        <p>{{ inner.title }}</p>
-                    {% endfor %}
-                </div>
-            </details>
+        {% for child in menu.children %}
+            {% draw_menu_children child.id %}
         {% endfor %}
     </ul>
 </details>
-</body>
-</html>
