@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draw menu</title>
+
+   <style>
+   html {padding: 30px}
+   p {
+    margin-left: 3em;
+   }
+  </style>
+
+</head>
+<body>
+<details>
+    <summary> {{ selected_menu.title }} </summary>
+    <ul>
+        {% for option, inner_options in all_inner_options.items %}
+            <details>
+                <summary> {{ option.title }} :</summary>
+                <div class="menu_item">
+                    {% for inner in inner_options %}
+                        <p>{{ inner.title }}</p>
+                    {% endfor %}
+                </div>
+            </details>
+        {% endfor %}
+    </ul>
+</details>
+</body>
+</html>
